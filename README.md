@@ -1,46 +1,188 @@
-# Getting Started with Create React App
+# Authing x 微信解决方案
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 运行项目
 
-## Available Scripts
+```
+yarn
+yarn start
+```
 
-In the project directory, you can run:
+<details>
+<summary><strong>查看项目运行截图</strong></summary>
 
-### `yarn start`
+![](https://cdn.authing.cn/blog/20201115153530.png)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+![](https://cdn.authing.cn/blog/20201115153548.png)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+![](https://cdn.authing.cn/blog/20201115153610.png)
+</details>
 
-### `yarn test`
+## 接入示例
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 接入 PC 扫码登录
 
-### `yarn build`
+> 什么是 [PC 扫码登录](https://developers.weixin.qq.com/doc/oplatform/Website_App/WeChat_Login/Wechat_Login.html)？
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+你需要用到 [authing-js-sdk](https://docs.authing.co/sdk/sdk-for-node/authentication/SocialAuthenticationClient.html)，详细接入配置请见：[接入微信 PC 扫码登录](https://docs.authing.co/social-login/web/wechat-pc.html)。
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+代码示例：
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```javascript
+import { AuthenticationClient } from "authing-js-sdk";
 
-### `yarn eject`
+const authing = new AuthenticationClient({
+  userPoolId: "YOUR_USERPOOL_ID",
+});
+authing.social.authorize('wechat:pc', {
+  popup: false,
+  onSuccess: (user) => {
+    console.log(user)
+  },
+  onError: (code, message) => {
+    console.error(code, message)
+  }
+})
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### 接入微信网页授权登录
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+> 什么是[微信网页授权登录](https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html) ？
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+你需要用到 [authing-js-sdk](https://docs.authing.co/sdk/sdk-for-node/authentication/SocialAuthenticationClient.html)，详细接入配置请见：[接入微信网页授权登录](https://docs.authing.co/social-login/web/wechat-mp.html)。
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+代码示例：
+```javascript
+import { AuthenticationClient } from "authing-js-sdk";
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+const authing = new AuthenticationClient({
+  userPoolId: "YOUR_USERPOOL_ID",
+});
+authing.social.authorize('wechat:webpage-authorization', {
+  popup: false,
+  onSuccess: (user) => {
+    console.log(user)
+  },
+  onError: (code, message) => {
+    console.error(code, message)
+  }
+})
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 接入移动端拉起微信登录
+
+> 什么是[移动端拉起微信登录](https://developers.weixin.qq.com/doc/oplatform/Mobile_App/WeChat_Login/Development_Guide.html) ？
+
+你需要用到 [authing-swift-sdk](https://docs.authing.co/sdk/sdk-for-swift.html)，详细接入配置请见：[接入移动端拉起微信登录](https://docs.authing.co/social-login/mobile/wechat.html)。
+
+代码示例：
+```javascript
+import SwiftyAuthing
+let userPoolId = "YOUR_USERPOOL_ID"
+self.client = AuthenticationClient(userPoolId: userPoolId)
+
+func loginByWeChatCode() {
+    //通过微信SDK返回的认证码登陆 https://docs.authing.cn/social-login/mobile/wechat.html
+    let code = "xxxxxxx"
+    self.client?.loginByWeChatCode(code: code, completion: { status in
+        print(status)
+    })
+}
+```
+
+## 接入小程序登录
+
+> 什么是[小程序登录](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/login.html) ？
+
+你需要用到 [authing-wxapp-sdk](https://docs.authing.co/sdk/sdk-for-wxapp.html)，详细接入配置请见：[接入移动端拉起微信登录](https://docs.authing.co/social-login/miniprogram/miniprogram/)。
+
+代码示例：
+
+1. 使用 code 登录，无需用户授权
+
+```javascript
+const { AuthenticationClient } = require("authing-wxapp-sdk")
+const { code } = await wx.login()
+const data = await authing.loginByCode(code)
+```
+
+2. 用户首次手动授权昵称头像
+
+```javascript
+// index.wxml
+<button open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+
+// index.js
+const { AuthenticationClient } = require("authing-wxapp-sdk")
+
+// 使用 code 登录，无需用户授权
+const { code } = await wx.login()
+const { iv, encryptedData } = e.detail
+const user = await authing.loginByCode(code, { iv, encryptedData })         
+```
+
+3. 使用用户授权的手机号登录
+
+```javascript
+// index.wxml
+<button open-type="getPhoneNumber" bindgetphonenumber="getPhone"> 获取手机号 </button>
+
+// index.js
+const { AuthenticationClient } = require("authing-wxapp-sdk")
+
+const { code } = await wx.login()
+const { iv, encryptedData } = e.detail
+const user = await authing.loginByPhone(code, iv, encryptedData)
+```
+
+## 接入小程序扫码登录
+
+> 什么是[小程序扫码登录](https://authing.cn/verify) ？
+
+你需要用到 [authing-js-sdk](https://docs.authing.co/sdk/sdk-for-node/authentication/QrCodeAuthenticationClient.html)，详细接入配置请见：[接入小程序扫码登录](https://docs.authing.co/scan-qrcode/wxapp-qrcode/)。
+
+代码示例：
+
+```javascript
+import { AuthenticationClient } from "authing-js-sdk";
+
+const authing = new AuthenticationClient({
+  userPoolId: "YOUR_USERPOOL_ID",
+});
+const onScanningSuccess = async (userInfo: any, ticket: string) => {
+  const { token } = userInfo;
+  if (!token) {
+    userInfo = await authing.wxqrcode.exchangeUserInfo(ticket);
+  }
+  console.log(userInfo)
+};
+
+authing.wxqrcode.startScanning("qrcode", {
+  onSuccess: onScanningSuccess,
+  onError: (message) => {
+    alert(message)
+  }
+});
+```
+
+## 移动端拉起小程序登录
+
+> 什么是[移动到拉起小程序登录](https://docs.authing.co/social-login/miniprogram/app2wxapp.html) ？
+
+你需要用到 [authing-swift-sdk](https://docs.authing.co/sdk/sdk-for-swift.html)，详细接入配置请见：[移动到拉起小程序登录](https://docs.authing.co/social-login/miniprogram/app2wxapp.html)。
+
+代码示例：
+```javascript
+import SwiftyAuthing
+let userPoolId = "YOUR_USERPOOL_ID"
+self.client = AuthenticationClient(userPoolId: userPoolId)
+
+func loginByWeChatCode() {
+    //通过微信SDK返回的认证码登陆 https://docs.authing.cn/social-login/mobile/wechat.html
+    let code = "xxxxxxx"
+    self.client?.loginByWeChatCode(code: code, completion: { status in
+        print(status)
+    })
+}
+```
+
