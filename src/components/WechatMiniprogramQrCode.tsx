@@ -1,6 +1,5 @@
-import { Divider } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { CodeBlock, CopyBlock, nord } from 'react-code-blocks';
+import { CodeBlock, nord } from 'react-code-blocks';
 import '../App.css';
 import { authing } from '../authing';
 import { DocLayout } from '../layouts/DocLayout';
@@ -8,6 +7,10 @@ import { DocLayout } from '../layouts/DocLayout';
 export const WechatMiniprogramQrCode = () => {
   const [loading, setLoading] = useState(true)
   const [started, setStarted] = useState(false);
+
+  const [success, setSuccess] = useState(false)
+  const [userInfo, setUserInfo] = useState("")
+
 
   useEffect(() => {
     if (started) return;
@@ -18,6 +21,8 @@ export const WechatMiniprogramQrCode = () => {
         userInfo = await authing.wxqrcode.exchangeUserInfo(ticket);
       }
       console.log(userInfo)
+      setSuccess(true)
+      setUserInfo(JSON.stringify(userInfo, null, 4))
     };
 
     authing.wxqrcode.startScanning("qrcode", {
@@ -75,6 +80,18 @@ authing.wxqrcode.startScanning("qrcode", {
               </div>
             }
             <div id="qrcode"></div>
+
+            {
+              success && <div style={{ marginTop: 11 }}>
+                <p>获取到的用户信息：</p>
+                <CodeBlock
+                  text={userInfo}
+                  language={'js'}
+                  showLineNumbers={false}
+                  theme={nord}
+                />
+              </div>
+            }
           </div>
         }
       />
