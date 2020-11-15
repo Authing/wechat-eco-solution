@@ -1,5 +1,14 @@
 # Authing x 微信解决方案
 
+- [运行项目](#运行项目)
+- [接入示例](#接入示例)
+  - [接入 PC 扫码登录](#接入-pc-扫码登录)
+  - [接入微信网页授权登录](#接入微信网页授权登录)
+  - [接入移动端拉起微信登录](#接入移动端拉起微信登录)
+  - [接入小程序登录](#接入小程序登录)
+  - [接入小程序扫码登录](#接入小程序扫码登录)
+  - [移动端拉起小程序登录](#移动端拉起小程序登录)
+
 ## 运行项目
 
 ```
@@ -90,7 +99,7 @@ func loginByWeChatCode() {
 }
 ```
 
-## 接入小程序登录
+### 接入小程序登录
 
 > 什么是[小程序登录](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/login.html) ？
 
@@ -135,7 +144,7 @@ const { iv, encryptedData } = e.detail
 const user = await authing.loginByPhone(code, iv, encryptedData)
 ```
 
-## 接入小程序扫码登录
+### 接入小程序扫码登录
 
 > 什么是[小程序扫码登录](https://authing.cn/verify) ？
 
@@ -165,7 +174,7 @@ authing.wxqrcode.startScanning("qrcode", {
 });
 ```
 
-## 移动端拉起小程序登录
+### 移动端拉起小程序登录
 
 > 什么是[移动到拉起小程序登录](https://docs.authing.co/social-login/miniprogram/app2wxapp.html) ？
 
