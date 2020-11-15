@@ -1,5 +1,7 @@
 # Authing x 微信解决方案
 
+了解[微信生态解决方案](https://authing.cn/solution/wechat)。
+
 - [运行项目](#运行项目)
 - [接入示例](#接入示例)
   - [接入 PC 扫码登录](#接入-pc-扫码登录)
