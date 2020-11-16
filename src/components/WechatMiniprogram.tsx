@@ -1,4 +1,3 @@
-import { Divider } from 'antd';
 import React from 'react';
 import { CodeBlock, nord } from 'react-code-blocks';
 import { DocLayout } from '../layouts/DocLayout';

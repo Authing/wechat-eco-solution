@@ -34,6 +34,7 @@ export const WechatMiniprogramQrCode = () => {
         setLoading(false)
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [started, authing]);
 
   return (
