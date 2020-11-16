@@ -10,12 +10,23 @@ export const Intro = () => {
 
     <p>Authing 目前提供的微信登录方式共有 6 种：</p>
     <ol>
-      <li>PC 扫码登录 <a href="https://docs.authing.cn/social-login/web/wechat-pc.html" target="_blank" rel="noopener noreferrer">查看文档</a></li>
-      <li>微信网页授权授权 <a href="https://docs.authing.cn/social-login/web/wechat-mp.html" target="_blank" rel="noopener noreferrer">查看文档</a></li>
-      <li>移动端拉起微信登录 <a href="https://docs.authing.cn/social-login/mobile/wechat.html" target="_blank" rel="noopener noreferrer">查看文档</a></li>
-      <li>微信小程序内登录 <a href="https://docs.authing.cn/social-login/miniprogram/miniprogram/" target="_blank" rel="noopener noreferrer">查看文档</a></li>
-      <li>使用小程序扫码登录 <a href="https://docs.authing.cn/scan-qrcode/wxapp-qrcode/" target="_blank" rel="noopener noreferrer">查看文档</a></li>
-      <li>移动端拉起小程序登录 <a href="https://docs.authing.cn/social-login/miniprogram/app2wxapp.htm" target="_blank" rel="noopener noreferrer">查看文档</a></li>
+      <li>PC 扫码登录 
+        <a href="https://docs.authing.cn/social-login/web/wechat-pc.html" target="_blank" rel="noopener noreferrer">查看接入文档</a>，
+      <a href="https://developers.weixin.qq.com/doc/oplatform/Website_App/WeChat_Login/Wechat_Login.html" target="_blank" rel="noopener noreferrer">查看官方文档</a>
+      </li>
+      <li>微信网页授权授权 <a href="https://docs.authing.cn/social-login/web/wechat-mp.html" target="_blank" rel="noopener noreferrer">查看接入文档</a>，
+      <a href="https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html" target="_blank" rel="noopener noreferrer">查看官方文档</a>
+      </li>
+      <li>移动端拉起微信登录 <a href="https://docs.authing.cn/social-login/mobile/wechat.html" target="_blank" rel="noopener noreferrer">查看接入文档</a>，
+      <a href="https://developers.weixin.qq.com/doc/oplatform/Mobile_App/WeChat_Login/Development_Guide.html" target="_blank" rel="noopener noreferrer">查看官方文档</a>
+      </li>
+      <li>微信小程序内登录 <a href="https://docs.authing.cn/social-login/miniprogram/miniprogram/" target="_blank" rel="noopener noreferrer">查看接入文档</a>，
+      <a href="https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/login.html" target="_blank" rel="noopener noreferrer">查看官方文档</a>
+      </li>
+      <li>使用小程序扫码登录 <a href="https://docs.authing.cn/scan-qrcode/wxapp-qrcode/" target="_blank" rel="noopener noreferrer">查看接入文档</a></li>
+      <li>移动端拉起小程序登录 <a href="https://docs.authing.cn/social-login/miniprogram/app2wxapp.htm" target="_blank" rel="noopener noreferrer">查看接入文档</a>，
+      <a href="https://developers.weixin.qq.com/doc/oplatform/Mobile_App/Launching_a_Mini_Program/Launching_a_Mini_Program.html" target="_blank" rel="noopener noreferrer">查看官方文档</a>
+      </li>
     </ol>
 
     <p>Authing 提供了 SDK，封装了复杂的从微信服务器换取用户信息、根据 openid unionid 机制识别绑定同一用户逻辑，开发者只需要指定一个登录成功事件回调函数即可，如接入 PC 端的微信扫码登录：
