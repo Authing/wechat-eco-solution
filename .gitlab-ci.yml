@@ -1,0 +1,68 @@
+image: node:12.14.0
+
+stages:
+  - build
+  - upload
+
+before_script:
+  - export VERSION=$(cat package.json | grep version | head -1 | awk -F= "{ print $2 }" | sed 's/[version:,\",]//g' | tr -d '[[:space:]]')
+  - VERSION_TAG=${VERSION}
+  - OSS_URL=${CDN_OSS_DAILY}
+
+build:
+  stage: build
+  cache:
+    untracked: true
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+  script:
+    - yarn install --registry https://registry.npm.taobao.org/
+    - yarn build
+  artifacts:
+    untracked: false
+    paths:
+      - dist
+    expire_in: 30 days
+
+build:docker:
+  stage: build
+  image: docker:latest
+  script:
+    - docker build -t authing:wechat-eco-solution .
+    - mkdir docker-image
+    - docker save -o docker-image/${CI_PROJECT_NAME}-${VERSION_TAG}-docker.tar authing:wechat-eco-solution
+  artifacts:
+    untracked: false
+    paths:
+      - docker-image
+    expire_in: 3 days
+
+upload:oss:
+  stage: upload
+  image:
+    name: fuergaosi/ossutil:latest
+  script:
+    - >
+      ossutil --access-key-id ${ALIYUN_ACCESS_KEY}
+      --access-key-secret ${ALIYUN_ACCESS_KEY_SECRET}
+      -e oss-cn-zhangjiakou.aliyuncs.com cp -r -f dist oss://${OSS_URL}/authing-wechat-eco-solution/${VERSION}/
+  dependencies:
+    - build
+
+upload:docker:
+  stage: upload
+  image: docker:latest
+  script:
+    - docker load < docker-image/${CI_PROJECT_NAME}-${VERSION_TAG}-docker.tar
+    - docker login -u ${DOCKER_USERNAME}  -p ${DOCKER_PASSWD}  ${DOCKER_REPO}
+    - export IMAGE_NAME=${DOCKER_REPO}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}
+    - docker tag authing:wechat-eco-solution ${IMAGE_NAME}:${VERSION_TAG}
+    - docker push ${IMAGE_NAME}:${VERSION_TAG}
+    - |
+      if [ "$CI_COMMIT_REF_NAME" == "master" ]; then
+        docker tag ${IMAGE_NAME}:${VERSION_TAG} ${IMAGE_NAME}:latest;
+        docker push ${IMAGE_NAME}:latest;
+      fi
+  dependencies:
+    - build:docker
