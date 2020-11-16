@@ -188,12 +188,9 @@ import SwiftyAuthing
 let userPoolId = "YOUR_USERPOOL_ID"
 self.client = AuthenticationClient(userPoolId: userPoolId)
 
-func loginByWeChatCode() {
-    //通过微信SDK返回的认证码登陆 https://docs.authing.cn/social-login/mobile/wechat.html
-    let code = "xxxxxxx"
-    self.client?.loginByWeChatCode(code: code, completion: { status in
+func loginByWeChatMiniprogram() {
+    self.client?.loginByWeChatMiniprogram(completion: { status in
         print(status)
     })
 }
 ```
-
