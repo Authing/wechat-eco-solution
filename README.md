@@ -1,15 +1,29 @@
 # Authing x 微信解决方案
 
+<div align=center>
+  <img width="250" src="https://files.authing.co/authing-console/authing-logo-new-20210924.svg" />
+</div>
+
+<div align="center">
+    <a href="https://forum.authing.cn/" target="_blank"><img src="https://img.shields.io/badge/chat-forum-blue" /></a>
+    <a href="https://opensource.org/licenses/MIT" target="_blank"><img src="https://img.shields.io/badge/License-MIT-success" alt="License"></a>
+</div>
+
 了解[微信生态解决方案](https://authing.cn/solution/wechat)。
 
-- [运行项目](#运行项目)
-- [接入示例](#接入示例)
-  - [接入 PC 扫码登录](#接入-pc-扫码登录)
-  - [接入微信网页授权登录](#接入微信网页授权登录)
-  - [接入移动端拉起微信登录](#接入移动端拉起微信登录)
-  - [接入小程序登录](#接入小程序登录)
-  - [接入小程序扫码登录](#接入小程序扫码登录)
-  - [移动端拉起小程序登录](#移动端拉起小程序登录)
+- [Authing x 微信解决方案](#authing-x-微信解决方案)
+  - [运行项目](#运行项目)
+  - [接入示例](#接入示例)
+    - [接入 PC 扫码登录](#接入-pc-扫码登录)
+    - [接入微信网页授权登录](#接入微信网页授权登录)
+    - [接入移动端拉起微信登录](#接入移动端拉起微信登录)
+    - [接入小程序登录](#接入小程序登录)
+    - [接入小程序扫码登录](#接入小程序扫码登录)
+    - [移动端拉起小程序登录](#移动端拉起小程序登录)
+  - [常见问题](#常见问题)
+  - [开源共建](#开源共建)
+  - [贡献](#贡献)
+  - [开源许可](#开源许可)
 
 ## 运行项目
 
@@ -194,3 +208,27 @@ func loginByWeChatMiniprogram() {
     })
 }
 ```
+
+## 常见问题
+
+如果需要在线技术支持，可访问[官方论坛](https://forum.authing.cn/). 此仓库的 issue 仅用于上报 Bug 和提交新功能特性。
+
+## 开源共建
+
+- Fork 此仓库
+- 创建自己的 git 分支 (git checkout -b my-new-feature)
+- 提交你的修改 (git commit -am 'Add some feature')
+- 将修改内容推送到远程分支 (git push -u origin my-new-feature)
+- 创建一个 Pull Request
+
+## 贡献
+
+https://github.com/Authing/.github/blob/main/CONTRIBUTING.md
+
+
+## 开源许可
+
+[MIT](https://opensource.org/licenses/MIT)
+
+Copyright (c) 2019-present, Authing
+
